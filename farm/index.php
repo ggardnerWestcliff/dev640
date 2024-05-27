@@ -9,12 +9,14 @@
     echo <<<_END
 Check out your <a href="feed.php?view=$user">feed</a> or edit your <a href="profile.php">profile</a>.
 _END;
+    echo "</div>";
+    showProfile($user, $user);
 
   }
   else           echo ' please sign up or log in';
 
   echo <<<_END
-      </div><br>
+      <br>
     </div>
     <div data-role="footer" style="vertical-align: bottom; text-align: center">
       <h4>A Web App from <i><a href='https://github.com/ggardnerWestcliff/dev640'

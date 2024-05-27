@@ -33,11 +33,17 @@
     echo "<h4>Create a new post:</h4>";
     echo <<<_END
 <form method='post' action='feed.php?view=$view&r=$randstr' enctype="multipart/form-data">
+<div class="two-col">
+    <div class="col1">
     <label for="img">Select image:</label><br>
     <input type="file" id="img" name="file" accept="image/*" required><br>
+</div>
+<div class="col2">
     <label for="text">Add a caption:</label><br>
-    <textarea name='text'></textarea><br>
-    <input data-transition='slide' type='submit' name="submit" value='Publish Post'>
+    <textarea name='text' style="width: 80%"></textarea><br>
+</div>
+</div>
+<input data-transition='slide' type='submit' name="submit" value='Publish Post'>
 </form>
 <br>
 _END;
@@ -51,7 +57,16 @@ _END;
     }
 
     echo "<br>";
-    $query  = "SELECT * FROM posts ORDER BY time DESC";
+
+    $query  = <<<_END
+    SELECT
+    DISTINCT
+    p.*
+    FROM posts p 
+    LEFT JOIN friends f on p.auth = f.user
+    WHERE p.auth = '$user' OR f.friend = '$user'
+    ORDER BY time DESC
+_END;
     $result = queryMysql($query);
     $num    = $result->rowCount();
 
@@ -60,8 +75,6 @@ _END;
     echo "<h1>$name1 Feed</h1>";
     while ($row = $result->fetch())
     {
-      if ($row['auth'] == $user || in_array($row['auth'], $friends, true))
-      {
         echo " <a href='members.php?view=" . $row['auth'] .
              "&r=$randstr'>" . $row['auth'] . "</a> ";
         echo "[". date('M jS \'y g:ia', $row['time']) . "]:";
@@ -84,8 +97,6 @@ _END;
     </div>
 <br>
 _END;
-
-      }
     }
   }
 

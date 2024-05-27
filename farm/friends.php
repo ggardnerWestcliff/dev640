@@ -20,7 +20,7 @@
   }
 
   // Uncomment this line if you wish the user�s profile to show here
-   showProfile($view);
+    showProfile($view, $user);
 
   $followers = array();
   $following = array();

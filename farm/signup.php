@@ -21,7 +21,7 @@ echo <<<_END
         }
       )
     }
-  </script>  
+  </script>
 _END;
 
   $error = $user = $pass = "";
@@ -50,23 +50,26 @@ _END;
 
 echo <<<_END
       <form method='post' action='signup.php?r=$randstr'>$error
-      <div data-role='fieldcontain'>
         <label></label>
         Please enter your details to sign up
       </div>
+      <div class="two-col">
+      <div data-role='fieldcontain' class="col1">
       <div data-role='fieldcontain'>
-        <label>Username</label>
-        <input type='text' maxlength='16' name='user' value='$user'
+        <label>Username</label><br>
+        <input type='text' maxlength='16' name='user' value='$user' required
           onBlur='checkUser(this)'>
         <label></label><div id='used'>&nbsp;</div>
       </div>
-      <div data-role='fieldcontain'>
-        <label>Password</label>
-        <input type='text' maxlength='16' name='pass' value='$pass'>
       </div>
+      <div class="col2">
       <div data-role='fieldcontain'>
+        <label>Password</label><br>
+        <input type='password' maxlength='16' name='pass' value='$pass' required>
+      </div>
         <label></label>
         <input data-transition='slide' type='submit' value='Sign Up'>
+      </div>
       </div>
     </div>
   </body>

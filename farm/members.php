@@ -1,8 +1,6 @@
 <?php
   require_once 'header.php';
 
-  if (!$loggedin) die("</div></body></html>");
-
   if (isset($_GET['view']))
   {
     $view = sanitizeString($_GET['view']);
@@ -11,7 +9,7 @@
     else                $name = "$view's";
     
     echo "<h3>$name Profile</h3>";
-    showProfile($view);
+    showProfile($view, $user);
     echo "<a data-role='button' data-transition='slide'
           href='feed.php?view=$user&r=$randstr'>View your feed</a>";
     die("</div></body></html>");
@@ -55,12 +53,12 @@
     if (($t1 + $t2) > 1) echo " &harr; is a mutual friend";
     elseif ($t1)         echo " &larr; you are following";
     elseif ($t2)       { echo " &rarr; is following you";
-                         $follow = "recip"; }
+                         $follow = "follow back"; }
     
     if (!$t1) echo " [<a data-transition='slide'
       href='members.php?add=" . $row['user'] . "&r=$randstr'>$follow</a>]";
     else      echo " [<a data-transition='slide'
-      href='members.php?remove=" . $row['user'] . "&r=$randstr'>drop</a>]";
+      href='members.php?remove=" . $row['user'] . "&r=$randstr'>unfollow</a>]";
   }
 
 ?>

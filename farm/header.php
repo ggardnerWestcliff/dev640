@@ -33,10 +33,16 @@ _INIT;
       array_push($friends, $row['friend']);
     }
   }
-  else $loggedin = FALSE;
+  else {
+    $loggedin = FALSE;
+    $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+    if ($curPageName !== "index.php" and $curPageName !== "login.php" and $curPageName !== "signup.php") {
+      header('Location: index.php');
+    }
+  }
 
 echo <<<_MAIN
-    <title>The Farm: $userstr</title>
+    <title>The Farm</title>
   </head>
   <body style="width: auto; height: 100%">
     <div data-role='page' style="height: auto; display: flex; flex-flow: column">
@@ -55,7 +61,7 @@ _MAIN;
 echo <<<_LOGGEDIN
         <div class='center'>
           <a data-role='button' data-inline='true' data-icon='home'
-            data-transition="slide" href='members.php?view=$user&r=$randstr'>Home</a>
+            data-transition="slide" href='index.php?r=$randstr'>Home</a>
           <a data-role='button' data-inline='true' data-icon='user'
             data-transition="slide" href='members.php?r=$randstr'>Members</a>
           <a data-role='button' data-inline='true' data-icon='heart'

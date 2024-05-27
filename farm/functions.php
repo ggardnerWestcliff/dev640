@@ -52,16 +52,24 @@
     return str_replace("'", "", $result); // So now remove them
   }
 
-  function showProfile($user)
+  function showProfile($targetUser, $curUser) : void
   {
     global $pdo;
+    echo <<<_END
+<div class='profile-container'>
+    <div class="left">
+_END;
+    showProfilePicture($targetUser, true);
+  echo <<<_END
+</div>
+<div class="right">
+_END;
+    $result = $pdo->query("SELECT * FROM profiles WHERE user='$targetUser'");
 
-    showProfilePicture($user);
-
-    $result = $pdo->query("SELECT * FROM profiles WHERE user='$user'");
-
-    if (!profilePictureSet($user)) {
-      echo "<p>You have not uploaded a profile picture yet.<br>Upload one <a href='profile.php'>here</a>.</p>";
+    if (!profilePictureSet($targetUser)) {
+      if ($targetUser === $curUser) {
+        echo "<p>You have not uploaded a profile picture yet.<br>Upload one <a href='profile.php'>here</a>.</p>";
+      }
     }
 
     if ($result->rowCount() > 0) {
@@ -70,8 +78,15 @@
       echo "Last Name:<br>" . $row['last_name'] . "<br>";
       echo "Description:<br>". $row['description'] . "<br></p>";
     } else {
-      echo "<p>You have not provided any details about yourself. Update your profile <a href='profile.php'>here</a>.</p><br>";
+      if ($targetUser === $curUser) {
+        echo "<p>You have not provided any details about yourself.<br>";
+        echo "Update your profile <a href='profile.php'>here</a>.</p><br>";
+      } else {
+        echo "<p>$targetUser has not provided any details about themselves.";
+        echo "<br>Check out your <a href='feed.php'>feed</a> to see more.<br></p>";
+      }
     }
+    echo "</div></div>";
   }
 
   function showProfilePicture($user, $with_icon=false): void

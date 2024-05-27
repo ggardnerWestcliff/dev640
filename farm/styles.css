@@ -37,9 +37,9 @@ img.post {
 
 .username {
   text-align :center;
-  background :#eb8;
-  color      :#40d;
-  font-family:"Freeman";
+  background :navy;
+  color      :white;
+  font-family: "Freeman", sans-serif;
   font-size  :20pt;
   padding    :4px;
 }
@@ -66,7 +66,7 @@ img.post {
 }
 
 .taken, .error {
-  color:red;
+  color:navy;
 }
 
 .available {
@@ -83,7 +83,7 @@ img.post {
   font-weight:bold;
   font-style :italic;
   font-size  :97px;
-  color      :red;
+  color      :navy;
   }
 
 #robin {
@@ -112,7 +112,7 @@ img.post {
 }
 
 .profile-picture-container:hover .overlay {
-  opacity: 1;
+  opacity: 0.75;
 }
 
 .overlay {
@@ -125,20 +125,65 @@ img.post {
   height: 300px;
   opacity: 0;
   transition: .5s ease;
-  background-color: #f8f8f8;
+  background: #f8f8f8;
 }
 
 .overlay a {
-  background: white;
   width: 300px;
   height: 300px;
+}
+
+.overlay a:hover {
+  /*opacity: 75%;*/
 }
 
 .edit-picture-icon {
   display: block;
-  width: 300px;
-  height: 300px;
-  background: #f8f8f8;
+  width: 150px;
+  height: 150px;
+  margin-top: 75px;
+  margin-left: 75px;
   border: none;
   box-shadow: none;
+}
+
+.profile-container {
+  text-align: left;
+  display: flex;
+  width: 100%;
+  opacity: 1;
+}
+
+div.left {
+  padding: 10px;
+}
+
+div.right{
+  flex: 1;
+  padding: 10px;
+}
+
+.two-col {
+  overflow: hidden;
+  display: flex;
+}
+
+.two-col .col1 {
+  padding: 10px;
+}
+.two-col .col2 {
+  flex: 1;
+  padding: 10px;
+}
+
+.two-col .col1 {
+  float: left;
+}
+
+.two-col .col2 {
+  float: right;
+}
+
+.two-col label {
+  display: block;
 }
