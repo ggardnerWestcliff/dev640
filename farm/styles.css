@@ -1,0 +1,144 @@
+* {
+  font-family:"Freeman",sans-serif;
+  font-size  :14pt;
+}
+
+body {
+  background:#f8f8f8;
+  border    :1px solid #888;
+  width: auto;
+  margin: 10%;
+}
+
+html {
+  background:#fff
+}
+
+img {
+  border            :1px solid black;
+  margin-right      :15px;
+  -moz-box-shadow   :2px 2px 2px #888;
+  -webkit-box-shadow:2px 2px 2px #888;
+  box-shadow        :2px 2px 2px #888;
+}
+
+#icon {
+  height: 100px;
+  width: 100px;
+  border: none;
+  box-shadow: none;
+}
+
+img.post {
+  width: 100%;
+  max-width: 500px;
+  max-height: 600px;
+}
+
+.username {
+  text-align :center;
+  background :#eb8;
+  color      :#40d;
+  font-family:"Freeman";
+  font-size  :20pt;
+  padding    :4px;
+}
+
+.user-icon {
+  height: 300px;
+  width: 300px;
+  border: none;
+  box-shadow: none;
+}
+
+.info {
+  font-style :italic;
+  margin     :40px 0px;
+  text-align :center;
+}
+
+.center {
+  text-align:center;
+}
+
+.subhead {
+  font-weight:bold;
+}
+
+.taken, .error {
+  color:red;
+}
+
+.available {
+  color:green;
+}
+
+.whisper {
+  font-style:italic;
+  color     :#006600;
+}
+
+#logo {
+  font-family:"Freeman";
+  font-weight:bold;
+  font-style :italic;
+  font-size  :97px;
+  color      :red;
+  }
+
+#robin {
+  position          :relative;
+  border            :0px;
+  margin-left       :-6px;
+  margin-right      :0px;
+  top               :17px;
+	-moz-box-shadow   :0px 0px 0px;
+	-webkit-box-shadow:0px 0px 0px;
+	box-shadow        :0px 0px 0px;
+}
+
+#used {
+  margin-top:50px;
+}
+
+#feed {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture-container {
+  position: relative;
+  width: 50%;
+}
+
+.profile-picture-container:hover .overlay {
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #f8f8f8;
+}
+
+.overlay a {
+  background: white;
+  width: 300px;
+  height: 300px;
+}
+
+.edit-picture-icon {
+  display: block;
+  width: 300px;
+  height: 300px;
+  background: #f8f8f8;
+  border: none;
+  box-shadow: none;
+}
