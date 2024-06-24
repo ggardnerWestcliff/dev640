@@ -57,8 +57,41 @@ img.post {
   text-align :center;
 }
 
+.header-container {
+  display: flex;
+}
+.header-container-left {
+  width: 25%
+}
+.header-container-center {
+  text-align:center;
+  width: 50%;
+}
+.header-container-right {
+  width: 25%;
+  text-align: right;
+  justify-content: flex-end;
+}
+
 .center {
   text-align:center;
+}
+
+nav {
+  justify-content: space-between;
+  display: block;
+}
+
+nav a {
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+nav form {
+  flex: 1;
+  display: inline-block;
+  margin-right: 0;
+  justify-content: flex-end;
 }
 
 .subhead {

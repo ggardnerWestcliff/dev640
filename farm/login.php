@@ -1,6 +1,12 @@
 <?php
   require_once 'header.php';
   $error = $user = $pass = "";
+  $redirect_time = 3;
+
+  if (isset($_POST['forgotpass'])) {
+    header( "refresh:0;url=forgotpass.php" );
+    exit;
+  }
 
   if (isset($_POST['user']))
   {
@@ -22,10 +28,10 @@
       {
         $_SESSION['user'] = $user;
         $_SESSION['pass'] = $pass;
-        die("<div class='center'>You are now logged in. Please
-             <a data-transition='slide'
-               href='members.php?view=$user&r=$randstr'>click here</a>
-               to continue.</div></div></body></html>");
+        header( "refresh:$redirect_time;url=index.php" );
+        die(
+            "<div class='center'>You are now logged in. Re-directing in $redirect_time seconds...</div></div></body></html>"
+        );
       }
     }
   }
@@ -48,9 +54,15 @@ echo <<<_END
           <label>Password</label>
           <input type='password' maxlength='16' name='pass' value='$pass'>
         </div>
-        <div data-role='fieldcontain'>
-          <label></label>
-          <input data-transition='slide' type='submit' value='Login'>
+        <div class="two-col">
+          <div class="col1" data-role="fieldcontain">
+            <label></label>
+            <input data-transition='slide' type='submit' value='Login'>
+          </div>
+          <div class="col2">
+            <label></label>
+            <input data-transition='slide' type='submit' name="forgotpass" value='Forgot Password'>
+          </div>
         </div>
       </form>
     </div>

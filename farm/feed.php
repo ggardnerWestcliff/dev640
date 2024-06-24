@@ -30,22 +30,19 @@
       $name1 = "<a href='members.php?view=$view&r=$randstr'>$view</a>'s";
       $name2 = "$view's";
     }
-    echo "<h4>Create a new post:</h4>";
     echo <<<_END
-<form method='post' action='feed.php?view=$view&r=$randstr' enctype="multipart/form-data">
 <div class="two-col">
-    <div class="col1">
+<div class="col1" style="border: 1px solid black">
+<h1><u>Create A New Post</u></h1>
+<form method='post' action='feed.php?view=$view&r=$randstr' enctype="multipart/form-data">
     <label for="img">Select image:</label><br>
     <input type="file" id="img" name="file" accept="image/*" required><br>
-</div>
-<div class="col2">
     <label for="text">Add a caption:</label><br>
     <textarea name='text' style="width: 80%"></textarea><br>
-</div>
-</div>
 <input data-transition='slide' type='submit' name="submit" value='Publish Post'>
 </form>
 <br>
+<h1><u>Suggested Friends</u></h1>
 _END;
 
     date_default_timezone_set('UTC');
@@ -56,9 +53,33 @@ _END;
       queryMysql("DELETE FROM posts WHERE id='$erase' AND recip='$user'");
     }
 
-    echo "<br>";
+    $suggestedFriendsQuery = <<<_FRIENDS
+    SELECT
+    DISTINCT
+    m.user
+    , COUNT(DISTINCT p.id) as posts
+    FROM members m
+    LEFT JOIN posts p ON m.user = p.auth
+    WHERE m.user NOT IN (
+        SELECT
+        DISTINCT
+        f.friend
+        FROM friends f
+        WHERE f.user = '$user'
+    )
+    AND m.user != '$user'
+    GROUP BY m.user
+    ORDER BY m.user
+_FRIENDS;
+    $result = queryMysql($suggestedFriendsQuery);
+    $suggestedFriendsCount    = $result->rowCount();
+    while ($row = $result->fetch()) {
+      echo "<a href='members.php?view=" . $row['user'] . "&r=$randstr'>" . $row['user'] . "</a>" . " (" . $row['posts'] . " posts)<br>";
+    }
+    echo "</div>";
 
-    $query  = <<<_END
+
+    $postsQuery  = <<<_POSTS
     SELECT
     DISTINCT
     p.*
@@ -66,13 +87,13 @@ _END;
     LEFT JOIN friends f on p.auth = f.user
     WHERE p.auth = '$user' OR f.friend = '$user'
     ORDER BY time DESC
-_END;
-    $result = queryMysql($query);
-    $num    = $result->rowCount();
+_POSTS;
+    $result = queryMysql($postsQuery);
+    $postCount    = $result->rowCount();
 
 
 
-    echo "<h1>$name1 Feed</h1>";
+    echo "<div class='col2' style='border: 1px solid black'><h1><u>$name1 Feed</u></h1>";
     while ($row = $result->fetch())
     {
         echo " <a href='members.php?view=" . $row['auth'] .
@@ -100,13 +121,14 @@ _END;
     }
   }
 
-  if (!$num)
+  if (!$postCount)
     echo "<br><span class='info'>No posts yet</span><br><br>";
 
   echo "<br><a data-role='button'
         href='feed.php?view=$view&r=$randstr'>Refresh feed</a>";
 ?>
 
-    </div><br>
+    </div>
+    </div>
   </body>
 </html>

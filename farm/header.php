@@ -17,6 +17,8 @@ _INIT;
 
   require_once 'functions.php';
 
+  $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+
   $userstr = 'Welcome Guest';
   $randstr = substr(md5(rand()), 0, 7);
 
@@ -35,8 +37,12 @@ _INIT;
   }
   else {
     $loggedin = FALSE;
-    $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
-    if ($curPageName !== "index.php" and $curPageName !== "login.php" and $curPageName !== "signup.php") {
+    if (
+        $curPageName !== "index.php"
+        and $curPageName !== "login.php"
+        and $curPageName !== "signup.php"
+        and $curPageName !== "forgotpass.php"
+    ) {
       header('Location: index.php');
     }
   }
@@ -56,22 +62,31 @@ echo <<<_MAIN
 
 _MAIN;
 
-  if ($loggedin)
-  {
+  if ($loggedin) {
+    $search_user = "";
+    if (isset($_GET["search_user"])) {
+      $search_user = sanitizeString($_GET["search_user"]);
+      header( "refresh:0;url=members.php?view=$search_user" );
+    }
 echo <<<_LOGGEDIN
-        <div class='center'>
-          <a data-role='button' data-inline='true' data-icon='home'
-            data-transition="slide" href='index.php?r=$randstr'>Home</a>
-          <a data-role='button' data-inline='true' data-icon='user'
-            data-transition="slide" href='members.php?r=$randstr'>Members</a>
-          <a data-role='button' data-inline='true' data-icon='heart'
-            data-transition="slide" href='friends.php?r=$randstr'>Friends</a>
-          <a data-role='button' data-inline='true' data-icon='mail'
-            data-transition="slide" href='feed.php?r=$randstr'>Feed</a>
-          <a data-role='button' data-inline='true' data-icon='edit'
-            data-transition="slide" href='profile.php?r=$randstr'>Edit Profile</a>
-          <a data-role='button' data-inline='true' data-icon='action'
-            data-transition="slide" href='logout.php?r=$randstr'>Log out</a>
+        <div class="header-container">
+        <div class="header-container-left"></div>
+        <div class='header-container-center'>
+          <nav>
+            <a data-role='button' data-inline='true' data-transition="slide" href='index.php?r=$randstr'>Home</a>
+            <a data-role='button' data-inline='true' data-transition="slide" href='members.php?r=$randstr'>Members</a>
+            <a data-role='button' data-inline='true' data-transition="slide" href='friends.php?r=$randstr'>Friends</a>
+            <a data-role='button' data-inline='true' data-transition="slide" href='feed.php?r=$randstr'>Feed</a>
+            <a data-role='button' data-inline='true' data-transition="slide" href='profile.php?r=$randstr'>Edit Profile</a>
+            <a data-role='button' data-inline='true' data-transition="slide" href='logout.php?r=$randstr'>Log out</a>
+          </nav>
+        </div>
+        <div class="header-container-right">
+            <form action="$curPageName?r=$randstr" method="GET">
+              <input id="search" type="text" placeholder="Type here" name="search_user" value=$search_user>
+              <input id="submit" type="submit" value="Search">
+            </form>
+        </div>
         </div>
         
 _LOGGEDIN;
@@ -80,12 +95,14 @@ _LOGGEDIN;
   {
 echo <<<_GUEST
         <div class='center'>
+        <nav>
           <a data-role='button' data-inline='true' data-icon='home'
             data-transition='slide' href='index.php?r=$randstr''>Home</a>
           <a data-role='button' data-inline='true' data-icon='plus'
             data-transition="slide" href='signup.php?r=$randstr''>Sign Up</a>
           <a data-role='button' data-inline='true' data-icon='check'
             data-transition="slide" href='login.php?r=$randstr''>Log In</a>
+        </nav>
         </div>
         <p class='info'>(You must be logged in to use this app)</p>
         
